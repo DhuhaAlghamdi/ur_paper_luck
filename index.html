@@ -1,0 +1,44 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f0e5">
+  <title>ur_paper_luck</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main>
+    <header class="masthead">
+      <h1>This is your <em>sign.</em></h1>
+    </header>
+
+    <section class="table" aria-label="Paper slips">
+      <h2 id="prompt" class="instruction" role="status">Pick two papers</h2>
+      <div class="slips">
+        <button class="slip pink" type="button" aria-label="Open the pink paper" aria-expanded="false" aria-controls="note-pink">
+          <span class="paper" aria-hidden="true"><span class="fold"><span class="star">&#10022;</span></span></span>
+          <span class="slip-label">Rose</span>
+        </button>
+        <button class="slip sage" type="button" aria-label="Open the green paper" aria-expanded="false" aria-controls="note-sage">
+          <span class="paper" aria-hidden="true"><span class="fold"><span class="star">&#10022;</span></span></span>
+          <span class="slip-label">Sage</span>
+        </button>
+        <button class="slip butter" type="button" aria-label="Open the yellow paper" aria-expanded="false" aria-controls="note-butter">
+          <span class="paper" aria-hidden="true"><span class="fold"><span class="star">&#10022;</span></span></span>
+          <span class="slip-label">Butter</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="reveals" aria-label="Revealed papers" hidden>
+      <div class="notes">
+        <figure id="note-pink" class="pink note" hidden></figure>
+        <figure id="note-sage" class="sage note" hidden></figure>
+        <figure id="note-butter" class="butter note" hidden></figure>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
