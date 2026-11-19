@@ -27,14 +27,38 @@
   { path: "pic/26.jpg", text: "Maybe you don't realize how good you're doing because you keep raising the bar." },
   { path: "pic/27.jpg", text: "The art of not being ready and doing it anyways will take you so far." },
   { path: "pic/28.jpg", text: "وفي السماء رزقكم وما توعدون", lang: "ar" },
+  { path: "pic/29.jpg", text: "من جهل نفسه صدّق تأويل الآخرين.", lang: "ar" },
+  { path: "pic/30.jpg", text: "وتوكل على الله وكفى بالله وكيلاً", lang: "ar" },
+  { path: "pic/31.jpg", text: "والله يعلم وأنتم لا تعلمون", lang: "ar" },
+  { path: "pic/32.jpg", text: "إن مع العسر يسراً. Indeed, with hardship will be ease." },
+  { path: "pic/33.jpg", text: "You'll never feel ready because ready isn't a feeling. It's a decision." },
+  { path: "pic/34.jpg", text: "Be brave enough to be bad." },
+  { path: "pic/35.jpg", text: "I failed is crossed out. I learned is circled." },
+  { path: "pic/36.jpg", text: "Remember why you started." },
+  { path: "pic/37.jpg", text: "Step out of your comfort zone." },
+  { path: "pic/38.jpg", text: "If not now, when?" },
+  { path: "pic/39.jpg", text: "Trust your ability. The last letters spell try." },
+  { path: "pic/40.jpg", text: "Your mindset decides your limits." },
+  { path: "pic/41.jpg", text: "A person steps out of a circle labeled Comfort Zone toward a pin labeled Your Potential." },
+  { path: "pic/42.jpg", text: "What is your choice? Pain of discipline or pain of regret." },
+  { path: "pic/43.jpg", text: "If there are no ups and downs in your life, it means you are dead." },
+  { path: "pic/44.jpg", text: "Work hard but make sure you enjoy life too." },
+  { path: "pic/45.jpg", text: "قوي التوكل لا يهزم وملح الدعاء لا يخذل", lang: "ar" },
+  { path: "pic/46.jpg", text: "مستحيلك على الله هيّن", lang: "ar" },
 ];
 
 const slips = [...document.querySelectorAll(".slip")];
 const prompt = document.querySelector("#prompt");
 const reveals = document.querySelector(".reveals");
 const notes = document.querySelector(".notes");
+const viewer = document.querySelector(".viewer");
+const viewerImage = document.querySelector(".viewer-image");
 const available = [...paperImages];
 let pickCount = 0;
+
+viewer.addEventListener("click", (event) => {
+  if (event.target === viewer) viewer.close();
+});
 
 for (const slip of slips) {
   const index = Math.floor(Math.random() * available.length);
@@ -47,6 +71,21 @@ for (const slip of slips) {
   art.src = path;
   if (lang) art.lang = lang;
 
+  const enlarge = document.createElement("button");
+  enlarge.type = "button";
+  enlarge.className = "print";
+  enlarge.setAttribute("aria-haspopup", "dialog");
+  enlarge.setAttribute("aria-label", `Enlarge the ${color.toLowerCase()} paper`);
+  enlarge.setAttribute("aria-describedby", `${note.id}-art`);
+  art.id = `${note.id}-art`;
+  enlarge.append(art);
+  enlarge.addEventListener("click", () => {
+    viewerImage.src = path;
+    viewerImage.alt = text;
+    viewerImage.lang = lang ?? "en";
+    viewer.showModal();
+  });
+
   slip.addEventListener("click", () => {
     if (pickCount >= 2 || slip.getAttribute("aria-expanded") === "true") return;
 
@@ -56,8 +95,8 @@ for (const slip of slips) {
     slip.setAttribute("aria-label", `${color} paper, opened`);
     label.textContent = "Opened";
 
-    note.append(art);
-    notes.prepend(note);
+    note.append(enlarge);
+    notes.append(note);
     note.hidden = false;
     reveals.hidden = false;
     if (pickCount === 1) prompt.textContent = "One more to go.";
@@ -66,11 +105,6 @@ for (const slip of slips) {
       prompt.hidden = true;
       const remaining = slips.find((button) => button.getAttribute("aria-expanded") === "false");
       remaining.disabled = true;
-
-      if (matchMedia("(max-width: 759px)").matches) {
-        const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-        reveals.scrollIntoView({ behavior: reduceMotion ? "instant" : "smooth" });
-      }
     }
   });
 }
